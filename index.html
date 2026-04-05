@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empathy in the Workplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #040910;
+    --bg-slide: #070e1c;
+    --fg: #eef2fb;
+    --muted: #5a7090;
+    --accent: #00ff88;
+    --accent-dim: rgba(0,255,136,0.10);
+    --accent2: #00cfff;
+    --accent2-dim: rgba(0,207,255,0.10);
+    --card: rgba(10,18,36,0.90);
+    --border: rgba(0,255,136,0.13);
+    --danger: #ff3d5a;
+    --warning: #ffb700;
+    --radius: 16px;
+    --font-hero: clamp(48px, 6.5vw, 88px);
+    --font-title: clamp(32px, 4vw, 58px);
+    --font-sub: clamp(16px, 2vw, 24px);
+    --font-body: clamp(14px, 1.5vw, 17px);
+    --font-card-h: clamp(15px, 1.7vw, 19px);
+    --font-card-p: clamp(12px, 1.3vw, 14px);
+    --font-label: clamp(11px, 1.1vw, 13px);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    user-select: none;
+  }
+
+  #bgCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .glow-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+  .g1 { width: 600px; height: 600px; background: #00ff88; top: -200px; left: -150px; animation: blobFloat1 14s ease-in-out infinite; }
+  .g2 { width: 500px; height: 500px; background: #00cfff; bottom: -150px; right: -100px; animation: blobFloat2 18s ease-in-out infinite; }
+  .g3 { width: 350px; height: 350px; background: #7c3aed; top: 45%; left: 55%; opacity: 0.07; animation: blobFloat3 22s ease-in-out infinite; }
+
+  @keyframes blobFloat1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
+  @keyframes blobFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }
+  @keyframes blobFloat3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-20px)} }
+
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 200;
+    transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 0 18px var(--accent);
+  }
+
+  .slide-counter {
+    position: fixed;
+    top: 22px; right: 72px;
+    z-index: 200;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .slide-counter .current { color: var(--accent); font-size: 26px; font-weight: 800; line-height: 1; }
+
+  .dot-nav {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .dot-nav button {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+  }
+  .dot-nav button.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 10px rgba(0,255,136,0.6); transform: scale(1.4); }
+  .dot-nav button:hover:not(.active) { border-color: var(--accent); transform: scale(1.2); }
+
+  .nav-arrows {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .nav-arrows button {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: rgba(10,18,36,0.8);
+    color: var(--fg);
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+  }
+  .nav-arrows button:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 20px rgba(0,255,136,0.15); transform: scale(1.08); }
+  .nav-arrows button:disabled { opacity: 0.2; cursor: default; transform: none; box-shadow: none; border-color: var(--border); color: var(--muted); }
+  .nav-hint { font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin: 0 6px; }
+
+  .slides-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+  }
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 90px 90px 90px;
+    opacity: 0;
+    transform: translateX(70px);
+    transition: all 0.55s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+  .slide.exit-left { opacity: 0; transform: translateX(-70px); }
+  .slide-inner { width: 100%; max-width: 1200px; }
+
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.12; }
+
+  .slide-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: var(--font-label);
+    font-weight: 700;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slide-label::before { content: ''; width: 28px; height: 2px; background: var(--accent); flex-shrink: 0; }
+
+  .slide-title { font-size: var(--font-title); font-weight: 800; color: var(--fg); margin-bottom: 16px; letter-spacing: -0.5px; }
+  .slide-title .accent { color: var(--accent); }
+  .slide-title .accent2 { color: var(--accent2); }
+
+  .slide-subtitle { font-size: var(--font-sub); color: var(--muted); font-weight: 400; margin-bottom: 28px; max-width: 760px; line-height: 1.5; }
+
+  /* Animations */
+  @keyframes animUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+  .anim-up { animation: animUp 0.55s cubic-bezier(0.4,0,0.2,1) both; }
+  .d1 { animation-delay: 0.08s; }
+  .d2 { animation-delay: 0.16s; }
+  .d3 { animation-delay: 0.24s; }
+  .d4 { animation-delay: 0.32s; }
+
+  /* Cards */
+  .cards-grid { display: grid; gap: 14px; margin-top: 8px; }
+  .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    backdrop-filter: blur(16px);
+    transition: all 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::after { content:''; position:absolute; inset:0; border-radius:var(--radius); background:linear-gradient(135deg,rgba(0,255,136,0.04) 0%,transparent 60%); opacity:0; transition:opacity 0.35s; }
+  .card:hover { border-color: rgba(0,255,136,0.32); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,255,136,0.07); }
+  .card:hover::after { opacity: 1; }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--accent-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--accent);
+    margin-bottom: 16px; flex-shrink: 0;
+  }
+  .card-icon.blue { background: var(--accent2-dim); color: var(--accent2); }
+  .card-icon.red { background: rgba(255,61,90,0.12); color: var(--danger); }
+  .card-icon.yellow { background: rgba(255,183,0,0.12); color: var(--warning); }
+  .card-icon.purple { background: rgba(124,58,237,0.12); color: #a78bfa; }
+
+  .card h3 { font-size: var(--font-card-h); font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: var(--font-card-p); color: var(--muted); line-height: 1.6; }
+
+  /* Title Slide */
+  .title-slide .slide-inner { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:65vh; }
+  .title-badge { display:inline-flex; align-items:center; gap:10px; padding:10px 24px; border:1px solid var(--border); border-radius:100px; font-size:13px; color:var(--accent); font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:36px; background:var(--accent-dim); }
+  .title-main { font-size:var(--font-hero); font-weight:800; line-height:1.04; margin-bottom:22px; letter-spacing:-1.5px; }
+  .title-sub { font-size:var(--font-sub); color:var(--muted); font-weight:400; margin-bottom:52px; max-width:720px; line-height:1.55; }
+  .title-meta { display:flex; gap:36px; font-size:16px; color:var(--muted); }
+  .title-meta span { display:flex; align-items:center; gap:10px; }
+  .title-meta i { color:var(--accent); font-size:14px; }
+
+  /* Best Practices / numbered grid */
+  .bp-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px; }
+  .bp-item { display:flex; gap:18px; padding:24px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); transition:all 0.3s; align-items:flex-start; }
+  .bp-item:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,255,136,0.06); }
+  .bp-num { font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:800; color:rgba(0,255,136,0.18); line-height:1; flex-shrink:0; min-width:44px; }
+  .bp-item:hover .bp-num { color:rgba(0,255,136,0.45); }
+  .bp-text h3 { font-size:17px; font-weight:700; margin-bottom:6px; }
+  .bp-text p { font-size:14px; color:var(--muted); line-height:1.6; }
+
+  /* Compare boxes */
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:22px; }
+  .cbox { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; transition:all 0.3s; }
+  .cbox:hover { transform:translateY(-3px); }
+  .cbox.bad { border-top:3px solid var(--danger); }
+  .cbox.good { border-top:3px solid var(--accent); }
+  .cbox-tag { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+  .cbox.bad .cbox-tag { color:var(--danger); }
+  .cbox.good .cbox-tag { color:var(--accent); }
+  .cbox h3 { font-size:20px; margin-bottom:12px; }
+  .cbox-list { display:flex; flex-direction:column; gap:8px; }
+  .cbox-list li { list-style:none; display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--muted); line-height:1.5; }
+  .cbox-list li i { margin-top:2px; flex-shrink:0; }
+  .cbox.bad .cbox-list li i { color:var(--danger); }
+  .cbox.good .cbox-list li i { color:var(--accent); }
+
+  /* Case steps */
+  .case-steps { margin-top:22px; display:flex; flex-direction:column; gap:10px; }
+  .case-step { display:flex; align-items:center; gap:18px; padding:18px 26px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); transition:all 0.3s; }
+  .case-step:hover { border-color:var(--accent); background:rgba(0,255,136,0.04); }
+  .case-step-num { width:36px; height:36px; border-radius:50%; background:var(--accent-dim); color:var(--accent); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:15px; flex-shrink:0; border:1px solid rgba(0,255,136,0.2); }
+  .case-step-text { font-size:16px; line-height:1.5; }
+  .case-step-text strong { color:var(--accent); font-weight:700; }
+  .case-step .case-icon { margin-left:auto; color:var(--muted); font-size:17px; opacity:0; transition:opacity 0.3s; }
+  .case-step:hover .case-icon { opacity:1; color:var(--accent); }
+
+  /* Conclusion */
+  .conclusion-points { display:flex; flex-direction:column; gap:14px; margin-top:22px; margin-bottom:32px; }
+  .conclusion-point { display:flex; align-items:center; gap:18px; padding:20px 28px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); font-size:18px; line-height:1.5; transition:all 0.3s; }
+  .conclusion-point:hover { border-color:var(--accent); transform:translateX(7px); }
+  .conclusion-point i { color:var(--accent); font-size:22px; flex-shrink:0; }
+  .final-quote { text-align:center; padding:34px; border:1px solid rgba(0,255,136,0.3); border-radius:var(--radius); background:var(--accent-dim); position:relative; overflow:hidden; }
+  .final-quote::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,255,136,0.06) 0%, transparent 70%); }
+  .final-quote p { font-family:'Space Grotesk',sans-serif; font-size:clamp(20px,2.5vw,30px); font-weight:700; color:var(--fg); position:relative; z-index:1; }
+  .quote-marks { font-family:'Space Grotesk',sans-serif; font-size:clamp(40px,5vw,64px); color:var(--accent); opacity:0.4; line-height:0.5; vertical-align:-0.3em; }
+  .quote-marks.left { margin-right:8px; }
+  .quote-marks.right { margin-left:8px; }
+
+  /* Types row */
+  .types-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px; }
+  .type-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:26px 22px; transition:all 0.3s; text-align:center; }
+  .type-card:hover { transform:translateY(-4px); border-color:rgba(0,255,136,0.32); box-shadow:0 12px 40px rgba(0,255,136,0.07); }
+  .type-card .type-icon { font-size:32px; margin-bottom:14px; }
+  .type-card .type-badge { display:inline-block; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 14px; border-radius:100px; margin-bottom:12px; }
+  .type-card h3 { font-size:17px; font-weight:700; margin-bottom:8px; }
+  .type-card p { font-size:13px; color:var(--muted); line-height:1.6; }
+  .type-card.t1 .type-badge { background:var(--accent-dim); color:var(--accent); }
+  .type-card.t2 .type-badge { background:var(--accent2-dim); color:var(--accent2); }
+  .type-card.t3 .type-badge { background:rgba(255,183,0,0.10); color:var(--warning); }
+
+  /* Why list */
+  .why-list { display:flex; flex-direction:column; gap:0; margin-top:20px; }
+  .why-item { display:flex; align-items:center; gap:18px; padding:15px 22px; background:var(--card); border-left:3px solid var(--accent); transition:all 0.3s; }
+  .why-item:nth-child(even) { border-left-color:var(--accent2); }
+  .why-item:hover { background:rgba(0,255,136,0.05); }
+  .why-item i { color:var(--accent); font-size:18px; flex-shrink:0; width:28px; text-align:center; }
+  .why-item:nth-child(even) i { color:var(--accent2); }
+  .why-item span { font-size:15px; line-height:1.5; }
+  .why-item strong { color:var(--fg); }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<div class="glow-blob g1"></div>
+<div class="glow-blob g2"></div>
+<div class="glow-blob g3"></div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter"><span class="current" id="counterCurrent">01</span><span>/ <span id="totalCount">08</span></span></div>
+<div class="dot-nav" id="dotNav"></div>
+
+<main class="slides-wrapper">
+
+  <!-- SLIDE 1 — TITLE -->
+  <section class="slide title-slide active" data-slide="0">
+    <div class="slide-inner">
+      <div class="title-badge anim-up"><i class="fa-solid fa-heart-handshake"></i> Emotional Intelligence — EQ</div>
+      <h1 class="title-main anim-up d1">Empathy in the<br><span style="color:var(--accent)">Workplace</span></h1>
+      <p class="title-sub anim-up d2">Understanding and caring about how others feel — and taking action to help. The skill that makes teams stronger, leaders better, and work more human.</p>
+      <div class="title-meta anim-up d3">
+        <span><i class="fa-solid fa-layer-group"></i> 8 Slides</span>
+        <span><i class="fa-solid fa-bullseye"></i> EQ Topic 3</span>
+        <span><i class="fa-solid fa-users"></i> IT & Digital Workplaces</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — WHAT IS EMPATHY -->
+  <section class="slide" data-slide="1">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">Definition</div>
+      <h2 class="slide-title anim-up d1">What Is <span class="accent">Empathy?</span></h2>
+      <p class="slide-subtitle anim-up d2">More than a feeling — it's a skill you can develop and practise every day.</p>
+      <div class="cards-grid cols-2 anim-up d3">
+        <div class="card" style="grid-column:1/-1;display:flex;align-items:flex-start;gap:24px;">
+          <div class="card-icon" style="font-size:28px;width:64px;height:64px;border-radius:16px;flex-shrink:0;"><i class="fa-solid fa-heart"></i></div>
+          <div>
+            <h3 style="font-size:20px;margin-bottom:10px;">Core Definition</h3>
+            <p style="font-size:15px;line-height:1.7;">Empathy is the ability to <strong style="color:var(--accent)">understand, recognize, and share</strong> the feelings, perspectives, and experiences of others — and to respond with <strong style="color:var(--accent2)">care and respect</strong>.<br><br>In simple words: <em style="color:var(--fg);">Put yourself in someone else's shoes.</em></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Not Just Feeling</h3>
+          <p>Empathy is an active skill — you choose to listen, observe, and respond thoughtfully, even when it's not easy.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon blue"><i class="fa-solid fa-arrows-spin"></i></div>
+          <h3>Can Be Developed</h3>
+          <p>Unlike personality traits, empathy grows with practice. Anyone can become more empathetic through awareness and effort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — WHY IT MATTERS -->
+  <section class="slide" data-slide="2">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">Importance</div>
+      <h2 class="slide-title anim-up d1">Why Empathy <span class="accent2">Matters</span></h2>
+      <p class="slide-subtitle anim-up d2">Modern IT workplaces depend on collaboration, communication, and trust — empathy powers all three.</p>
+      <div class="why-list anim-up d3">
+        <div class="why-item"><i class="fa-solid fa-comments"></i><span><strong>Improves communication</strong> — Understanding how others feel makes your messages clearer and more effective.</span></div>
+        <div class="why-item"><i class="fa-solid fa-shield-halved"></i><span><strong>Reduces conflict</strong> — Seeing another person's point of view prevents small misunderstandings from growing into problems.</span></div>
+        <div class="why-item"><i class="fa-solid fa-handshake"></i><span><strong>Builds trust and teamwork</strong> — People work harder for teammates who genuinely care about them.</span></div>
+        <div class="why-item"><i class="fa-solid fa-face-smile"></i><span><strong>Increases job satisfaction</strong> — Empathetic workplaces feel safer, more supportive, and more motivating.</span></div>
+        <div class="why-item"><i class="fa-solid fa-crown"></i><span><strong>Improves leadership</strong> — Empathetic leaders make better decisions because they understand the people they lead.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — THREE TYPES -->
+  <section class="slide" data-slide="3">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">Framework</div>
+      <h2 class="slide-title anim-up d1">3 Types of <span class="accent">Empathy</span></h2>
+      <p class="slide-subtitle anim-up d2">Empathy isn't one-size-fits-all — knowing which type to use is part of the skill.</p>
+      <div class="types-row anim-up d3">
+        <div class="type-card t1">
+          <div class="type-icon">🧠</div>
+          <div class="type-badge">Cognitive</div>
+          <h3>Understanding</h3>
+          <p>Knowing what another person is <strong style="color:var(--fg);">thinking or experiencing</strong>. You understand their perspective intellectually.</p>
+          <p style="margin-top:12px;font-size:12px;color:rgba(0,255,136,0.7);font-style:italic;">"I understand why my teammate is confused about this new tool."</p>
+        </div>
+        <div class="type-card t2">
+          <div class="type-icon">❤️</div>
+          <div class="type-badge">Emotional</div>
+          <h3>Feeling</h3>
+          <p>Sharing or sensing how another person <strong style="color:var(--fg);">feels emotionally</strong>. You connect at a deeper, human level.</p>
+          <p style="margin-top:12px;font-size:12px;color:rgba(0,207,255,0.7);font-style:italic;">"I can feel my colleague's anxiety before the big presentation."</p>
+        </div>
+        <div class="type-card t3">
+          <div class="type-icon">🙌</div>
+          <div class="type-badge">Compassionate</div>
+          <h3>Taking Action</h3>
+          <p>Understanding feelings AND <strong style="color:var(--fg);">doing something</strong> to help. The most powerful and complete form of empathy.</p>
+          <p style="margin-top:12px;font-size:12px;color:rgba(255,183,0,0.7);font-style:italic;">"Let me help them meet that deadline — I can see they're struggling."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — CASE STUDY 1: QUIET TEAMMATE -->
+  <section class="slide" data-slide="4">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">IT Workplace Example 1</div>
+      <h2 class="slide-title anim-up d1">The <span class="accent">Quiet</span> Teammate</h2>
+      <p class="slide-subtitle anim-up d2">A developer is quiet and keeps missing deadlines. How does empathy change the outcome?</p>
+      <div class="compare-grid anim-up d3">
+        <div class="cbox bad">
+          <div class="cbox-tag">❌ Without Empathy</div>
+          <h3>Assumption & Blame</h3>
+          <ul class="cbox-list">
+            <li><i class="fa-solid fa-xmark"></i> Assume the developer is lazy</li>
+            <li><i class="fa-solid fa-xmark"></i> Complain directly to management</li>
+            <li><i class="fa-solid fa-xmark"></i> Ignore the situation and move on</li>
+            <li><i class="fa-solid fa-xmark"></i> Team trust breaks down</li>
+          </ul>
+        </div>
+        <div class="cbox good">
+          <div class="cbox-tag">✅ With Empathy</div>
+          <h3>Curiosity & Support</h3>
+          <ul class="cbox-list">
+            <li><i class="fa-solid fa-check"></i> Ask privately — "Is everything okay?"</li>
+            <li><i class="fa-solid fa-check"></i> Discover they're learning a new technology</li>
+            <li><i class="fa-solid fa-check"></i> Offer extra support or pair programming</li>
+            <li><i class="fa-solid fa-check"></i><strong> Result: Better performance + stronger team trust</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — CASE STUDY 2: BUG IN PRODUCTION -->
+  <section class="slide" data-slide="5">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">IT Workplace Example 2</div>
+      <h2 class="slide-title anim-up d1">Bug in <span class="accent2">Production</span></h2>
+      <p class="slide-subtitle anim-up d2">A junior developer introduces a bug into the live system. An empathetic response makes all the difference.</p>
+      <div class="case-steps anim-up d3">
+        <div class="case-step">
+          <div class="case-step-num">1</div>
+          <div class="case-step-text"><strong>Stay calm, not blame</strong> — React to the problem, not the person. Panic or blame makes it worse.</div>
+          <i class="fa-solid fa-check case-icon"></i>
+        </div>
+        <div class="case-step">
+          <div class="case-step-num">2</div>
+          <div class="case-step-text"><strong>Focus on learning, not punishment</strong> — Ask "What happened?" not "Who did this?"</div>
+          <i class="fa-solid fa-check case-icon"></i>
+        </div>
+        <div class="case-step">
+          <div class="case-step-num">3</div>
+          <div class="case-step-text"><strong>Guide through the fix</strong> — Walk the developer through resolving the issue together so they learn the process.</div>
+          <i class="fa-solid fa-check case-icon"></i>
+        </div>
+        <div class="case-step">
+          <div class="case-step-num">4</div>
+          <div class="case-step-text"><strong>Improve the system</strong> — Use the incident to strengthen testing and review processes for everyone.</div>
+          <i class="fa-solid fa-check case-icon"></i>
+        </div>
+        <div class="case-step" style="border-color:rgba(0,255,136,0.25);background:rgba(0,255,136,0.04);">
+          <div class="case-step-num" style="background:rgba(0,255,136,0.2);">🏆</div>
+          <div class="case-step-text"><strong>Outcome:</strong> Developer gains confidence, improves skills, and the whole team benefits from better processes.</div>
+          <i class="fa-solid fa-star case-icon" style="color:var(--warning);"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — HOW TO PRACTISE -->
+  <section class="slide" data-slide="6">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">Skills</div>
+      <h2 class="slide-title anim-up d1">How to <span class="accent">Practise</span> Empathy</h2>
+      <p class="slide-subtitle anim-up d2">Empathy at work is built through small, consistent habits every day.</p>
+      <div class="bp-grid anim-up d3">
+        <div class="bp-item">
+          <div class="bp-num">01</div>
+          <div class="bp-text"><h3>Listen Actively</h3><p>Give full attention. Don't interrupt or plan your reply while someone is talking. Make them feel heard.</p></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">02</div>
+          <div class="bp-text"><h3>Ask, Don't Assume</h3><p>Before judging behaviour, ask a simple question: "Are you okay?" or "Is there anything I can help with?"</p></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">03</div>
+          <div class="bp-text"><h3>Acknowledge Feelings</h3><p>You don't need to fix everything. Sometimes saying "That sounds really tough" is more powerful than a solution.</p></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">04</div>
+          <div class="bp-text"><h3>Respect Differences</h3><p>In diverse teams, people carry different pressures and backgrounds. Curiosity beats judgment every time.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 — CONCLUSION -->
+  <section class="slide" data-slide="7">
+    <div class="slide-inner">
+      <div class="slide-label anim-up">Conclusion</div>
+      <h2 class="slide-title anim-up d1">Empathy Is a <span class="accent">Superpower</span></h2>
+      <div class="conclusion-points anim-up d2">
+        <div class="conclusion-point">
+          <i class="fa-solid fa-heart-handshake"></i>
+          <span>Empathy means <strong style="color:var(--accent)">understanding + feeling + acting</strong> — all three together create real impact</span>
+        </div>
+        <div class="conclusion-point">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>In IT teams, empathy turns <strong style="color:var(--accent2)">conflicts into collaboration</strong> and mistakes into growth opportunities</span>
+        </div>
+        <div class="conclusion-point">
+          <i class="fa-solid fa-seedling"></i>
+          <span>Empathy is a skill — it <strong style="color:var(--warning)">grows with practice</strong>, and small acts of care compound into stronger teams</span>
+        </div>
+      </div>
+      <div class="final-quote anim-up d3">
+        <span class="quote-marks left">"</span>
+        <p>Empathy is not just soft skills — it is smart skills</p>
+        <span class="quote-marks right">"</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Navigation -->
+<div class="nav-arrows">
+  <button id="btnPrev"><i class="fa-solid fa-chevron-left"></i></button>
+  <span class="nav-hint">← → keys</span>
+  <button id="btnNext"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<script>
+  /* Particle Background */
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  const PARTICLE_COUNT = 70;
+  const CONNECT_DIST = 160;
+  let particles = [];
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*0.38, vy:(Math.random()-0.5)*0.38, r:Math.random()*1.6+0.4 });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i+1; j < particles.length; j++) {
+        const dx = particles[i].x-particles[j].x, dy = particles[i].y-particles[j].y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if (dist < CONNECT_DIST) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle = `rgba(0,255,136,${(1-dist/CONNECT_DIST)*0.11})`; ctx.lineWidth=0.7; ctx.stroke();
+        }
+      }
+    }
+    for (const p of particles) {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,Math.max(0.5,p.r),0,Math.PI*2);
+      ctx.fillStyle='rgba(0,255,136,0.32)'; ctx.fill();
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  /* Slide Navigation */
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0, isTransitioning = false;
+
+  const progressBar = document.getElementById('progressBar');
+  const counterCurrent = document.getElementById('counterCurrent');
+  document.getElementById('totalCount').textContent = String(totalSlides).padStart(2,'0');
+  const dotNav = document.getElementById('dotNav');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.setAttribute('aria-label', `Go to slide ${i+1}`);
+    dot.addEventListener('click', () => goToSlide(i));
+    dotNav.appendChild(dot);
+  }
+  const dots = dotNav.querySelectorAll('button');
+
+  function updateUI() {
+    progressBar.style.width = ((currentSlide+1)/totalSlides*100)+'%';
+    counterCurrent.textContent = String(currentSlide+1).padStart(2,'0');
+    dots.forEach((d,i) => d.classList.toggle('active', i===currentSlide));
+    btnPrev.disabled = currentSlide===0;
+    btnNext.disabled = currentSlide===totalSlides-1;
+  }
+
+  function goToSlide(index) {
+    if (isTransitioning || index===currentSlide || index<0 || index>=totalSlides) return;
+    isTransitioning = true;
+    const direction = index > currentSlide ? 1 : -1;
+    const currentEl = slides[currentSlide];
+    const nextEl = slides[index];
+
+    nextEl.querySelectorAll('.anim-up').forEach(el => { el.style.animation='none'; void el.offsetHeight; el.style.animation=''; });
+
+    currentEl.classList.remove('active');
+    if (direction < 0) { currentEl.style.transform='translateX(70px)'; currentEl.style.opacity='0'; }
+    else { currentEl.classList.add('exit-left'); }
+
+    nextEl.style.opacity='0';
+    nextEl.style.transform = direction>0 ? 'translateX(70px)' : 'translateX(-70px)';
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      nextEl.classList.add('active'); nextEl.style.transform=''; nextEl.style.opacity='';
+    }));
+
+    currentSlide = index;
+    updateUI();
+
+    setTimeout(() => {
+      currentEl.classList.remove('exit-left'); currentEl.style.transform=''; currentEl.style.opacity='';
+      isTransitioning = false;
+    }, 560);
+  }
+
+  btnPrev.addEventListener('click', () => goToSlide(currentSlide-1));
+  btnNext.addEventListener('click', () => goToSlide(currentSlide+1));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goToSlide(currentSlide+1); }
+    else if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goToSlide(currentSlide-1); }
+    else if (e.key==='Home') { e.preventDefault(); goToSlide(0); }
+    else if (e.key==='End') { e.preventDefault(); goToSlide(totalSlides-1); }
+  });
+
+  let touchX=0, touchY=0;
+  document.addEventListener('touchstart', e => { touchX=e.changedTouches[0].screenX; touchY=e.changedTouches[0].screenY; },{passive:true});
+  document.addEventListener('touchend', e => {
+    const dx=e.changedTouches[0].screenX-touchX, dy=e.changedTouches[0].screenY-touchY;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50) dx<0?goToSlide(currentSlide+1):goToSlide(currentSlide-1);
+  },{passive:true});
+
+  updateUI();
+</script>
+</body>
+</html>
