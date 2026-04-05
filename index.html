@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
 <meta charset="UTF-8">
+<!-- Google Fonts for Khmer -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100..900&family=Noto+Sans+Khmer:wght@100..900&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Empathy in the Workplace</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -30,7 +34,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
 html,body{
-  font-family:'DM Sans',sans-serif;
+  font-family:'Nokora', 'Noto Sans Khmer', 'DM Sans', sans-serif;
   background:var(--bg);
   color:var(--fg);
   overflow:hidden;
@@ -112,7 +116,10 @@ html,body{
 .slide.exit-left{opacity:0;transform:translateX(-60px);}
 .slide-inner{width:100%;max-width:1180px;}
 
-h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;}
+.all-khmer-font, h1, h2, h3, h4, h5, h6, p, span, div {
+  font-family: 'Nokora', 'Noto Sans Khmer', 'DM Sans', sans-serif !important;
+}
+.h-title {font-family: 'Nokora', 'Noto Sans Khmer', 'DM Sans', sans-serif !important;}
 
 .label{
   font-family:'Sora',sans-serif;font-size:11px;font-weight:700;
@@ -164,7 +171,9 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 .tg{background:var(--green-dim);color:var(--green);}
 .tt{background:var(--teal-dim);color:var(--teal);}
 .ta{background:var(--amber-dim);color:var(--amber);}
-
+table, thead, tbody, tfoot, th, td, tr {
+  font-family: 'Nokora', 'Noto Sans Khmer', 'DM Sans', sans-serif !important;
+}
 /* COMPARE */
 .compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:16px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);}
 .chead{padding:14px 24px;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(13px,1.3vw,15px);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
@@ -213,7 +222,7 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 .conc-item:hover{border-color:rgba(0,232,135,.28);transform:translateX(6px);}
 .conc-item i{font-size:20px;flex-shrink:0;}
 
-.final-quote{text-align:center;padding:26px 36px;border:1px solid rgba(0,232,135,.28);border-radius:var(--r);background:var(--green-dim);position:relative;overflow:hidden;}
+.final-quote{text-align:center;padding:26px 36px;border:1px solid rgba(0,232,135,.28);border-radius:var(--r);background:var(--green-dim);position:relative;overflow:hidden;margin:32px 0;}
 .final-quote::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(0,232,135,.07) 0%,transparent 70%);}
 .final-quote p{font-family:'Sora',sans-serif;font-size:clamp(18px,2.2vw,26px);font-weight:700;position:relative;z-index:1;}
 .qm{font-family:'Sora',sans-serif;font-size:clamp(36px,4.5vw,58px);color:var(--green);opacity:.4;line-height:.4;vertical-align:-.25em;}
@@ -251,7 +260,7 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <div class="progress" id="prog"></div>
 
 <header class="header">
-  <div class="header-topic"><i class="fa-solid fa-heart-handshake" style="color:var(--green)"></i> EQ Topic 3 — <span>Empathy in the Workplace</span></div>
+  <div class="header-topic"><i class="fa-solid fa-heart-handshake" style="color:var(--green)"></i> ប្រធានបទ EQ ៣ — <span>ការយល់ដឹងអារម្មណ៍នៅកន្លែងធ្វើការ</span></div>
   <div class="slide-num"><b id="cNum">01</b>&nbsp;/&nbsp;<span id="tNum">09</span></div>
 </header>
 
@@ -262,38 +271,38 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 1 — TITLE -->
 <section class="slide title-slide active" data-slide="0">
   <div class="slide-inner">
-    <div class="title-badge au"><i class="fa-solid fa-heart-handshake"></i> Emotional Intelligence (EQ)</div>
-    <h1 class="title-main au d1">Empathy in the<br><span style="color:var(--green)">Workplace</span></h1>
-    <p class="title-sub au d2">Understanding how others feel — and caring enough to respond with kindness and action. The skill that transforms good teams into great ones.</p>
-    <div class="title-pills au d3">
-      <div class="pill"><i class="fa-solid fa-layer-group"></i> 8 Slides</div>
-      <div class="pill"><i class="fa-solid fa-table"></i> Tables Included</div>
-      <div class="pill"><i class="fa-solid fa-users"></i> IT Workplace Examples</div>
-      <div class="pill"><i class="fa-solid fa-graduation-cap"></i> EQ Series</div>
-    </div>
+      <div class="title-badge au"><i class="fa-solid fa-heart-handshake"></i> បញ្ញាអារម្មណ៍ (EQ)</div>
+      <h1 class="title-main au d1">ការយល់ដឹងអារម្មណ៍<br><span style="color:var(--green)">នៅកន្លែងធ្វើការ</span></h1>
+      <p class="title-sub au d2">ការយល់ដឹងអំពីអារម្មណ៍របស់អ្នកដទៃ និងមានចិត្តសប្បុរសក្នុងការឆ្លើយតប។ ជាជំនាញដែលបម្លែងក្រុមធម្មតាឲ្យក្លាយជាក្រុមល្អ។</p>
+      <div class="title-pills au d3">
+        <div class="pill"><i class="fa-solid fa-layer-group"></i> ៩ ស្លាយ</div>
+        <div class="pill"><i class="fa-solid fa-table"></i> មានតារាង</div>
+        <div class="pill"><i class="fa-solid fa-users"></i> ឧទាហរណ៍ IT</div>
+        <div class="pill"><i class="fa-solid fa-graduation-cap"></i> ស៊េរី EQ</div>
+      </div>
   </div>
 </section>
 
 <!-- SLIDE 2 — WHAT IS EMPATHY -->
 <section class="slide" data-slide="1">
   <div class="slide-inner">
-    <div class="label au">Definition</div>
-    <h2 class="h-title au d1">What Is <span class="g">Empathy?</span></h2>
-    <p class="subtitle au d2">A skill you can learn, practise, and grow every single day.</p>
+    <div class="label au">និយមន័យ</div>
+    <h2 class="h-title au d1">អ្វីទៅជា <span class="g">ការយល់ដឹងអារម្មណ៍?</span></h2>
+    <p class="subtitle au d2">ជាជំនាញដែលអ្នកអាចរៀន ហាត់ និងអភិវឌ្ឍបានរៀងរាល់ថ្ងៃ។</p>
     <div class="highlight-box au d3">
       <div class="hb-icon"><i class="fa-solid fa-lightbulb"></i></div>
-      <p>Empathy is the ability to <strong>understand, recognize, and share</strong> the feelings, perspectives, and experiences of others — and to respond with <strong style="color:var(--teal)">care and respect</strong>.<br><br>Simple version: <em style="color:var(--fg);">"Put yourself in someone else's shoes."</em></p>
+      <p>ការយល់ដឹងអារម្មណ៍គឺជាសមត្ថភាព <strong>យល់ដឹង ទទួលស្គាល់ និងចែករំលែក</strong>អារម្មណ៍ ទស្សនៈ និងបទពិសោធន៍របស់អ្នកដទៃ ហើយឆ្លើយតបដោយ <strong style="color:var(--teal)">ការថែរក្សា និងគោរព</strong>។<br><br>សម្រួល៖ <em style="color:var(--fg);">"ដាក់ខ្លួនឯងក្នុងស្បែកជើងអ្នកដទៃ"</em></p>
     </div>
     <div class="grid g2 au d4" style="margin-top:14px;">
       <div class="card">
         <div class="icon-box ig"><i class="fa-solid fa-arrows-rotate"></i></div>
-        <h3>Active, Not Passive</h3>
-        <p>Empathy is a choice. You actively decide to listen, understand, and respond with care — even when it's difficult.</p>
+        <h3>សកម្ម មិនមែនអសកម្ម</h3>
+        <p>ការយល់ដឹងអារម្មណ៍គឺជាជម្រើស។ អ្នកសម្រេចចិត្តស្តាប់ យល់ដឹង និងឆ្លើយតបដោយការថែរក្សា ទោះបីវាពិបាកក៏ដោយ។</p>
       </div>
       <div class="card">
         <div class="icon-box it"><i class="fa-solid fa-seedling"></i></div>
-        <h3>A Skill, Not Just a Feeling</h3>
-        <p>Unlike natural personality traits, empathy can be developed and improved through awareness, practice, and effort.</p>
+        <h3>ជាជំនាញ មិនមែនតែអារម្មណ៍</h3>
+        <p>ខុសពីលក្ខណៈបុគ្គលិកជាតិ ជំនាញនេះអាចអភិវឌ្ឍន៍ និងកែលម្អបានតាមការយល់ដឹង ការហាត់ និងការខិតខំប្រឹងប្រែង។</p>
       </div>
     </div>
   </div>
@@ -302,15 +311,15 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 3 — WHY IT MATTERS -->
 <section class="slide" data-slide="2">
   <div class="slide-inner">
-    <div class="label au">Importance</div>
-    <h2 class="h-title au d1">Why Empathy <span class="t">Matters</span></h2>
-    <p class="subtitle au d2">IT workplaces run on teams. Teams run on trust. Trust is built through empathy.</p>
+    <div class="label au">សារៈសំខាន់</div>
+    <h2 class="h-title au d1">ហេតុអ្វីការយល់ដឹងអារម្មណ៍<span class="t">សំខាន់</span></h2>
+    <p class="subtitle au d2">កន្លែងធ្វើការ IT ពឹងផ្អែកលើក្រុម។ ក្រុមពឹងផ្អែកលើការជឿជាក់។ ការជឿជាក់កើតចេញពីការយល់ដឹងអារម្មណ៍។</p>
     <div class="why-list au d3">
-      <div class="why-row"><i class="fa-solid fa-comments"></i><span><strong>Better Communication</strong> — Understanding feelings helps you say the right thing in the right way.</span></div>
-      <div class="why-row"><i class="fa-solid fa-shield-halved"></i><span><strong>Less Conflict</strong> — Seeing another person's point of view stops small problems from becoming big ones.</span></div>
-      <div class="why-row"><i class="fa-solid fa-handshake"></i><span><strong>Stronger Teamwork</strong> — People work harder and smarter for teammates who genuinely care about them.</span></div>
-      <div class="why-row"><i class="fa-solid fa-face-smile"></i><span><strong>Higher Job Satisfaction</strong> — Empathetic workplaces feel safer, more supportive, and more motivating for everyone.</span></div>
-      <div class="why-row"><i class="fa-solid fa-crown"></i><span><strong>Better Leadership</strong> — Leaders who understand their team make smarter decisions and earn real respect.</span></div>
+      <div class="why-row"><i class="fa-solid fa-comments"></i><span><strong>ការទំនាក់ទំនងល្អ</strong> — ការយល់ដឹងអារម្មណ៍ជួយឲ្យនិយាយបានត្រឹមត្រូវ។</span></div>
+      <div class="why-row"><i class="fa-solid fa-shield-halved"></i><span><strong>ជម្លោះតិច</strong> — យល់ពីទស្សនៈអ្នកដទៃជួយបញ្ឈប់បញ្ហាតូចមិនឲ្យធំ។</span></div>
+      <div class="why-row"><i class="fa-solid fa-handshake"></i><span><strong>ការធ្វើការជាក្រុមរឹងមាំ</strong> — មនុស្សខិតខំសម្រាប់ក្រុមដែលមានការថែរក្សាពិតប្រាកដ។</span></div>
+      <div class="why-row"><i class="fa-solid fa-face-smile"></i><span><strong>ពេញចិត្តការងារ</strong> — កន្លែងធ្វើការដែលមានការយល់ដឹងអារម្មណ៍មានសុវត្ថិភាព និងគាំទ្រល្អ។</span></div>
+      <div class="why-row"><i class="fa-solid fa-crown"></i><span><strong>ភាពជាអ្នកដឹកនាំល្អ</strong> — មេដឹកនាំដែលយល់ក្រុមធ្វើសេចក្តីសម្រេចបានល្អ។</span></div>
     </div>
   </div>
 </section>
@@ -318,30 +327,30 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 4 — THREE TYPES + TABLE -->
 <section class="slide" data-slide="3">
   <div class="slide-inner">
-    <div class="label au">Framework</div>
-    <h2 class="h-title au d1">3 Types of <span class="g">Empathy</span></h2>
-    <p class="subtitle au d2">Knowing which type to use makes you a more effective teammate and leader.</p>
+    <div class="label au">ស៊ុមគំនិត</div>
+    <h2 class="h-title au d1">ប្រភេទ ៣ នៃ<span class="g">ការយល់ដឹងអារម្មណ៍</span></h2>
+    <p class="subtitle au d2">ដឹងថាត្រូវប្រើប្រភេទណា ធ្វើឲ្យអ្នកកាន់តែមានប្រសិទ្ធភាពជាក្រុម និងជាអ្នកដឹកនាំ។</p>
     <div class="type-row au d3">
       <div class="type-card">
         <div class="type-emoji">🧠</div>
-        <div class="type-badge tg">Cognitive</div>
-        <h3>Understanding</h3>
-        <p>You understand what someone is <strong style="color:var(--fg)">thinking or going through</strong>.</p>
-        <p class="type-ex" style="color:rgba(0,232,135,.75)">"I get why this new tool is confusing for you."</p>
+        <div class="type-badge tg">ចំណេះដឹង</div>
+        <h3>យល់ដឹង</h3>
+        <p>អ្នកយល់ថាអ្នកដទៃ <strong style="color:var(--fg)">កំពុងគិត ឬប្រឈមមុខអ្វី</strong>។</p>
+        <p class="type-ex" style="color:rgba(0,232,135,.75)">"ខ្ញុំយល់ថាឧបករណ៍ថ្មីនេះធ្វើឲ្យអ្នកច្របូកច្របល់។"</p>
       </div>
       <div class="type-card">
         <div class="type-emoji">❤️</div>
-        <div class="type-badge tt">Emotional</div>
-        <h3>Feeling</h3>
-        <p>You <strong style="color:var(--fg)">feel what another person feels</strong> and connect at a human level.</p>
-        <p class="type-ex" style="color:rgba(0,212,255,.75)">"I can sense my colleague's anxiety before the big demo."</p>
+        <div class="type-badge tt">អារម្មណ៍</div>
+        <h3>មានអារម្មណ៍</h3>
+        <p>អ្នក <strong style="color:var(--fg)">មានអារម្មណ៍ដូចអ្នកដទៃ</strong> និងភ្ជាប់ជាមួយគ្នាដោយមនុស្សធម៌។</p>
+        <p class="type-ex" style="color:rgba(0,212,255,.75)">"ខ្ញុំអាចស្គាល់អារម្មណ៍កង្វល់របស់មិត្តរួមការងារមុនបង្ហាញការងារ។"</p>
       </div>
       <div class="type-card">
         <div class="type-emoji">🙌</div>
-        <div class="type-badge ta">Compassionate</div>
-        <h3>Taking Action</h3>
-        <p>You understand, feel, AND <strong style="color:var(--fg)">do something to help</strong>. The most powerful form.</p>
-        <p class="type-ex" style="color:rgba(255,176,32,.75)">"Let me help you — I can see you're overwhelmed."</p>
+        <div class="type-badge ta">មេត្តាករុណា</div>
+        <h3>ធ្វើអ្វីមួយ</h3>
+        <p>អ្នកយល់ដឹង មានអារម្មណ៍ ហើយ <strong style="color:var(--fg)">ធ្វើអ្វីមួយដើម្បីជួយ</strong>។ ជាប្រភេទមានអំណាចបំផុត។</p>
+        <p class="type-ex" style="color:rgba(255,176,32,.75)">"អោយខ្ញុំជួយអ្នក — ខ្ញុំឃើញអ្នកមានបញ្ហា។"</p>
       </div>
     </div>
   </div>
@@ -350,32 +359,32 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 5 — CASE 1: QUIET TEAMMATE -->
 <section class="slide" data-slide="4">
   <div class="slide-inner">
-    <div class="label au">IT Workplace — Case Study 1</div>
-    <h2 class="h-title au d1">The <span class="g">Quiet</span> Teammate</h2>
-    <p class="subtitle au d2">A developer is quiet and keeps missing deadlines. Does empathy change the outcome?</p>
+    <div class="label au">IT — ករណីសិក្សា ១</div>
+    <h2 class="h-title au d1">សមាជិកក្រុម <span class="g">ស្ងាត់</span></h2>
+    <p class="subtitle au d2">អ្នកអភិវឌ្ឍន៍ស្ងាត់ និងខកខានកាលកំណត់។ តើការយល់ដឹងអារម្មណ៍អាចផ្លាស់ប្តូរបានទេ?</p>
     <div class="compare-wrap au d3">
       <div>
-        <div class="chead bad"><i class="fa-solid fa-xmark-circle"></i> Without Empathy</div>
+        <div class="chead bad"><i class="fa-solid fa-xmark-circle"></i> គ្មានការយល់ដឹងអារម្មណ៍</div>
         <div class="cbody bad">
-          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>Assume the developer is lazy or doesn't care</span></div>
-          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>Complain directly to management without asking</span></div>
-          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>Ignore the situation and let resentment grow</span></div>
-          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>Team trust breaks down over time</span></div>
+          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>គិតថាអ្នកអភិវឌ្ឍន៍ខ្ជិល ឬមិនខ្វល់</span></div>
+          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>ប្តឹងទៅអ្នកគ្រប់គ្រងដោយមិនសួរ</span></div>
+          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>មិនអើពើហើយអោយបញ្ហាធំឡើង</span></div>
+          <div class="crow bad"><i class="fa-solid fa-xmark"></i><span>ការជឿជាក់ក្នុងក្រុមបាត់បង់</span></div>
         </div>
       </div>
       <div>
-        <div class="chead good"><i class="fa-solid fa-circle-check"></i> With Empathy</div>
+        <div class="chead good"><i class="fa-solid fa-circle-check"></i> មានការយល់ដឹងអារម្មណ៍</div>
         <div class="cbody good">
-          <div class="crow good"><i class="fa-solid fa-check"></i><span>Ask privately — "Is everything going okay?"</span></div>
-          <div class="crow good"><i class="fa-solid fa-check"></i><span>Discover they are struggling with a new technology</span></div>
-          <div class="crow good"><i class="fa-solid fa-check"></i><span>Offer support, pair programming, or extra training</span></div>
-          <div class="crow good"><i class="fa-solid fa-check"></i><span><strong>Result: Performance improves + team trust strengthens</strong></span></div>
+          <div class="crow good"><i class="fa-solid fa-check"></i><span>សួរឯកជន — "មានបញ្ហាអ្វីទេ?"</span></div>
+          <div class="crow good"><i class="fa-solid fa-check"></i><span>រកឃើញថាគេកំពុងតែបញ្ហាជាមួយបច្ចេកវិទ្យាថ្មី</span></div>
+          <div class="crow good"><i class="fa-solid fa-check"></i><span>ផ្តល់ជំនួយ ឬហាត់បន្ថែម</span></div>
+          <div class="crow good"><i class="fa-solid fa-check"></i><span><strong>លទ្ធផល៖ ការងារល្អឡើង + ក្រុមរឹងមាំ</strong></span></div>
         </div>
       </div>
     </div>
     <div class="highlight-box au d4" style="border-left-color:var(--amber);">
       <div class="hb-icon" style="color:var(--amber)"><i class="fa-solid fa-star"></i></div>
-      <p>One simple question — <strong style="color:var(--amber)">"Are you okay?"</strong> — can completely change the outcome for a struggling teammate.</p>
+      <p>សំណួរតែមួយ — <strong style="color:var(--amber)">"អ្នកសុខសប្បាយទេ?"</strong> — អាចផ្លាស់ប្តូរបានទាំងស្រុងសម្រាប់សមាជិកក្រុមដែលកំពុងមានបញ្ហា។</p>
     </div>
   </div>
 </section>
@@ -383,28 +392,28 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 6 — CASE 2: BUG IN PRODUCTION -->
 <section class="slide" data-slide="5">
   <div class="slide-inner">
-    <div class="label au">IT Workplace — Case Study 2</div>
-    <h2 class="h-title au d1">Bug in <span class="t">Production</span></h2>
-    <p class="subtitle au d2">A junior developer pushes a bug to the live system. An empathetic response changes everything.</p>
+    <div class="label au">IT — ករណីសិក្សា ២</div>
+    <h2 class="h-title au d1">កំហុសក្នុង<span class="t">ប្រព័ន្ធ</span></h2>
+    <p class="subtitle au d2">អ្នកអភិវឌ្ឍន៍ថ្មីម្នាក់បញ្ចូលកំហុសទៅប្រព័ន្ធ។ ការឆ្លើយតបដោយការយល់ដឹងអារម្មណ៍អាចផ្លាស់ប្តូរបាន។</p>
     <div class="steps au d3">
       <div class="step-row">
         <div class="step-num">1</div>
-        <div class="step-text"><strong>Stay calm — don't panic or blame.</strong> React to the problem, not the person. Panic makes everything worse.</div>
+        <div class="step-text"><strong>ស្ងប់ស្ងាត់ — កុំភ័យឬបន្ទោស។</strong> ត្រូវឆ្លើយតបចំពោះបញ្ហា មិនមែនមនុស្ស។ ភ័យធ្វើអោយអាក្រក់។</div>
         <i class="fa-solid fa-check step-check"></i>
       </div>
       <div class="step-row">
         <div class="step-num">2</div>
-        <div class="step-text"><strong>Ask "What happened?" — not "Who did this?"</strong> Focus on facts and learning, not punishment or shame.</div>
+        <div class="step-text"><strong>សួរ "កើតអ្វីឡើង?" — មិនមែន "នរណាធ្វើ?"</strong> ផ្តោតលើការសិក្សា មិនមែនការដាក់ទោស។</div>
         <i class="fa-solid fa-check step-check"></i>
       </div>
       <div class="step-row">
         <div class="step-num">3</div>
-        <div class="step-text"><strong>Guide them through fixing the issue together.</strong> Walk side-by-side so they learn the process, not just the fix.</div>
+        <div class="step-text"><strong>ណែនាំពួកគេជួយជាមួយគ្នា។</strong> ដើរជាមួយគ្នាឲ្យពួកគេរៀនដំណើរការ។</div>
         <i class="fa-solid fa-check step-check"></i>
       </div>
       <div class="step-row">
         <div class="step-num">4</div>
-        <div class="step-text"><strong>Improve the whole system.</strong> Strengthen testing and review processes so the same mistake can't happen again.</div>
+        <div class="step-text"><strong>កែលម្អប្រព័ន្ធទាំងមូល។</strong> ពង្រឹងការធ្វើតេស្ត និងពិនិត្យឡើងវិញ។</div>
         <i class="fa-solid fa-check step-check"></i>
       </div>
     </div>
@@ -414,44 +423,44 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 7 — FULL SUMMARY TABLE -->
 <section class="slide" data-slide="6">
   <div class="slide-inner">
-    <div class="label au">Quick Reference</div>
-    <h2 class="h-title au d1">Empathy <span class="a">Summary Table</span></h2>
-    <p class="subtitle au d2">Everything about empathy in one place — great for studying and revision.</p>
+    <div class="label au">សង្ខេបរហ័ស</div>
+    <h2 class="h-title au d1">តារាងសង្ខេប<span class="a">ការយល់ដឹងអារម្មណ៍</span></h2>
+    <p class="subtitle au d2">អ្វីៗទាំងអស់អំពីការយល់ដឹងអារម្មណ៍នៅទីតាំងតែមួយ — ល្អសម្រាប់សិក្សា។</p>
     <div class="tbl-wrap au d3">
       <table>
         <thead>
-          <tr><th>Topic</th><th>Key Idea</th><th>Workplace Example</th></tr>
+          <tr><th>ប្រធានបទ</th><th>គំនិតសំខាន់</th><th>ឧទាហរណ៍កន្លែងធ្វើការ</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><span class="tag tg">Definition</span></td>
-            <td>Understanding & sharing others' feelings, then responding with care</td>
-            <td>Listening to a stressed teammate without interrupting them</td>
+            <td><span class="tag tg">និយមន័យ</span></td>
+            <td>យល់ដឹង និងចែករំលែកអារម្មណ៍អ្នកដទៃ ហើយឆ្លើយតបដោយការថែរក្សា</td>
+            <td>ស្តាប់សមាជិកក្រុមដែលមានសម្ពាធដោយមិនផាត់ពាក្យ</td>
           </tr>
           <tr>
-            <td><span class="tag tt">Cognitive</span></td>
-            <td>Understanding what someone is thinking or experiencing</td>
-            <td>"I understand why this new tool is confusing for you."</td>
+            <td><span class="tag tt">ចំណេះដឹង</span></td>
+            <td>យល់ថាអ្នកដទៃកំពុងគិត ឬប្រឈមមុខអ្វី</td>
+            <td>"ខ្ញុំយល់ថាឧបករណ៍ថ្មីនេះធ្វើឲ្យអ្នកច្របូកច្របល់។"</td>
           </tr>
           <tr>
-            <td><span class="tag tt">Emotional</span></td>
-            <td>Sensing and sharing how another person feels emotionally</td>
-            <td>Noticing a colleague looks anxious before a big presentation</td>
+            <td><span class="tag tt">អារម្មណ៍</span></td>
+            <td>ស្គាល់ និងចែករំលែកអារម្មណ៍អ្នកដទៃ</td>
+            <td>សង្កេតឃើញមិត្តរួមការងារមានអារម្មណ៍កង្វល់មុនបង្ហាញការងារ</td>
           </tr>
           <tr>
-            <td><span class="tag ta">Compassionate</span></td>
-            <td>Understanding + feeling + taking action to help</td>
-            <td>Helping a teammate finish a task when they are overwhelmed</td>
+            <td><span class="tag ta">មេត្តាករុណា</span></td>
+            <td>យល់ដឹង + មានអារម្មណ៍ + ជួយ</td>
+            <td>ជួយសមាជិកក្រុមបញ្ចប់ភារកិច្ចពេលពួកគេមានបញ្ហា</td>
           </tr>
           <tr>
-            <td><span class="tag" style="background:rgba(255,77,109,.10);color:var(--rose)">No Empathy</span></td>
-            <td>Assumption and blame — missed chance to connect and support</td>
-            <td>Complaining about a quiet developer instead of asking why</td>
+            <td><span class="tag" style="background:rgba(255,77,109,.10);color:var(--rose)">គ្មានការយល់ដឹងអារម្មណ៍</span></td>
+            <td>គិតបែបអវិជ្ជមាន និងបន្ទោស — ខកខានឱកាសភ្ជាប់ និងគាំទ្រ</td>
+            <td>ប្តឹងអំពីអ្នកអភិវឌ្ឍន៍ស្ងាត់ជំនួសសួរថាហេតុអ្វី</td>
           </tr>
           <tr>
-            <td><span class="tag tg">With Empathy</span></td>
-            <td>Curiosity, support, and stronger team trust as a result</td>
-            <td>Asking privately and offering help → performance improves</td>
+            <td><span class="tag tg">មានការយល់ដឹងអារម្មណ៍</span></td>
+            <td>ចង់ដឹង គាំទ្រ និងក្រុមរឹងមាំជាលទ្ធផល</td>
+            <td>សួរឯកជន និងផ្តល់ជំនួយ → ការងារល្អឡើង</td>
           </tr>
         </tbody>
       </table>
@@ -462,26 +471,26 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 8 — CONCLUSION -->
 <section class="slide" data-slide="7">
   <div class="slide-inner">
-    <div class="label au">Conclusion</div>
-    <h2 class="h-title au d1">Empathy Is a <span class="g">Superpower</span></h2>
+    <div class="label au">សន្និដ្ឋាន</div>
+    <h2 class="h-title au d1">ការយល់ដឹងអារម្មណ៍គឺជា<span class="g">អំណាចពិសេស</span></h2>
     <div class="conc-list au d2">
       <div class="conc-item">
-        <i class="fa-solid fa-heart-handshake" style="color:var(--green)"></i>
-        <span>Empathy means <strong style="color:var(--green)">understand + feel + act</strong> — all three together create real, lasting impact in any team</span>
+        <i class="fa-solid fa-handshake" style="color:var(--green)"></i>
+        <span>ការយល់ដឹងអារម្មណ៍មានន័យថា <strong style="color:var(--green)">យល់ដឹង + មានអារម្មណ៍ + ធ្វើ</strong> — បីរួមគ្នាបង្កើតឥទ្ធិពលល្អក្នុងក្រុម</span>
       </div>
       <div class="conc-item">
         <i class="fa-solid fa-users-gear" style="color:var(--teal)"></i>
-        <span>In IT teams, empathy turns <strong style="color:var(--teal)">conflicts into collaboration</strong> and mistakes into growth opportunities for everyone</span>
+        <span>ក្នុងក្រុម IT ការយល់ដឹងអារម្មណ៍បម្លែងជម្លោះទៅជាការសហការនិងកំហុសទៅឱកាសអភិវឌ្ឍ</span>
       </div>
       <div class="conc-item">
         <i class="fa-solid fa-seedling" style="color:var(--amber)"></i>
-        <span>Empathy is a skill that <strong style="color:var(--amber)">grows with practice</strong> — small acts of care every day build stronger, happier teams</span>
+        <span>ជាជំនាញដែលអាចកើនឡើងដោយការហាត់ — សកម្មភាពថែរក្សាតូចៗរៀងរាល់ថ្ងៃបង្កើតក្រុមរឹងមាំ និងសប្បាយរីករាយ</span>
       </div>
     </div>
     <div class="final-quote au d3">
-      <span class="qm">"</span>
-      <p>Empathy is not just soft skills — it is smart skills</p>
-      <span class="qm">"</span>
+      
+      <p><span class="qm">«</span>ការយល់ដឹងអារម្មណ៍មិនមែនតែជាជំនាញទន់ទេ — វាជាជំនាញឆ្លាតវៃ<span class="qm margin-left-10">»</span></p>
+      
     </div>
   </div>
 </section>
@@ -490,9 +499,9 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 <!-- SLIDE 9 — THANK YOU -->
 <section class="slide" data-slide="8">
   <div class="slide-inner" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62vh;">
-    <div class="label au">Thank You</div>
-    <h2 class="h-title au d1" style="margin-bottom:18px;">Thank You! <span class="g">Questions?</span></h2>
-    <p class="subtitle au d2" style="margin-bottom:32px;">Your attention and engagement are appreciated.<br>Let's build more empathetic workplaces together.</p>
+    <div class="label au">អរគុណ</div>
+    <h2 class="h-title au d1" style="margin-bottom:18px;">អរគុណ! <span class="g">មានសំណួរទេ?</span></h2>
+    <p class="subtitle au d2" style="margin-bottom:32px;">សូមអរគុណសម្រាប់ការចាប់អារម្មណ៍ និងការចូលរួមរបស់អ្នក។<br>ចូរចូលរួមបង្កើតកន្លែងធ្វើការដែលមានការយល់ដឹងអារម្មណ៍ជាមួយគ្នា។</p>
     <i class="fa-solid fa-heart fa-6x" style="color:red;margin-bottom:18px;"></i>
   </div>
 </section>
@@ -501,7 +510,7 @@ tbody td:first-child{font-family:'Sora',sans-serif;font-weight:700;color:var(--t
 
 <div class="bottom-nav">
   <button id="btnPrev"><i class="fa-solid fa-chevron-left"></i></button>
-  <span class="hint">Go to Next/Previous Slide</span>
+  <span class="hint">ទៅស្លាយបន្ទាប់/មុន</span>
   <button id="btnNext"><i class="fa-solid fa-chevron-right"></i></button>
 </div>
 
